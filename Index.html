@@ -1,0 +1,1719 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mutagoma Precious - Portfolio</title>
+    <style>
+        /* ===== Global Styles ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            /* Light Mode Colors */
+            --bg-primary: linear-gradient(135deg, #f0e6ff 0%, #e6f2ff 50%, #ffe6f0 100%);
+            --bg-secondary: white;
+            --text-primary: #333;
+            --text-secondary: #555;
+            --header-bg: linear-gradient(135deg, #a8d8ff 0%, #c9a8ff 100%);
+            --accent-color: #7b68ee;
+            --card-shadow: rgba(168, 216, 255, 0.2);
+            --transition-speed: 0.3s;
+        }
+
+        body.dark-mode {
+            /* Dark Mode Colors */
+            --bg-primary: linear-gradient(135deg, #0f1419 0%, #1a1f2e 50%, #2d1b3d 100%);
+            --bg-secondary: #1e2533;
+            --text-primary: #e0e0e0;
+            --text-secondary: #b0b0b0;
+            --header-bg: linear-gradient(135deg, #1a2a3a 0%, #2d1f3a 100%);
+            --accent-color: #a78bfa;
+            --card-shadow: rgba(167, 139, 250, 0.15);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-primary);
+            background: var(--bg-primary);
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+            transition: background var(--transition-speed) ease, color var(--transition-speed) ease;
+        }
+
+        /* ===== Floating Flowers Background ===== */
+        body::before {
+            content: '🌸 🌺 🌼 🌻 🌷 🌹';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            font-size: 3rem;
+            opacity: 0.05;
+            pointer-events: none;
+            z-index: -1;
+            animation: floatFlowers 20s infinite linear;
+        }
+
+        /* ===== Header & Navigation ===== */
+        .header {
+            background: var(--header-bg);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 4px 15px rgba(168, 216, 255, 0.3);
+            transition: background var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
+        }
+
+        body.dark-mode .header {
+            box-shadow: 0 4px 15px rgba(167, 139, 250, 0.2);
+        }
+
+        .header::before {
+            content: '✨';
+            position: absolute;
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.5rem;
+            animation: twinkle 2s infinite;
+        }
+
+        .header::after {
+            content: '✨';
+            position: absolute;
+            right: 60px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.5rem;
+            animation: twinkle 2s infinite 0.5s;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            position: relative;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .logo::before {
+            content: '💫 ';
+            animation: spin 3s linear infinite;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+        }
+
+        /* ===== Search Bar Styles ===== */
+        .search-container {
+            position: relative;
+            flex: 1;
+            max-width: 400px;
+            min-width: 200px;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 0.8rem 1.2rem;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 25px;
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .search-input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .search-input:focus {
+            outline: none;
+            background: rgba(255, 255, 255, 0.25);
+            border-color: rgba(255, 255, 255, 0.6);
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+        }
+
+        .search-icon {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.2rem;
+            pointer-events: none;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        .search-clear {
+            position: absolute;
+            right: 45px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.2rem;
+            cursor: pointer;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            padding: 0.5rem;
+        }
+
+        .search-input:not(:placeholder-shown) ~ .search-clear {
+            opacity: 1;
+        }
+
+        /* ===== Search Results Modal ===== */
+        .search-results-modal {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: var(--bg-secondary);
+            border-radius: 15px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+            max-height: 400px;
+            overflow-y: auto;
+            margin-top: 0.5rem;
+            display: none;
+            z-index: 1000;
+            animation: slideDown 0.3s ease;
+        }
+
+        .search-results-modal.active {
+            display: block;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .search-results-header {
+            background: linear-gradient(135deg, #a8d8ff 0%, #c9a8ff 100%);
+            color: white;
+            padding: 1rem;
+            font-weight: 600;
+            border-radius: 15px 15px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        body.dark-mode .search-results-header {
+            background: linear-gradient(135deg, #2d1f3a 0%, #1a2a3a 100%);
+        }
+
+        .search-result-item {
+            padding: 1rem;
+            border-bottom: 1px solid rgba(168, 216, 255, 0.1);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .search-result-item:hover {
+            background: rgba(168, 216, 255, 0.1);
+            padding-left: 1.5rem;
+        }
+
+        body.dark-mode .search-result-item:hover {
+            background: rgba(167, 139, 250, 0.1);
+        }
+
+        .search-result-item:last-child {
+            border-bottom: none;
+        }
+
+        .search-result-text {
+            flex: 1;
+        }
+
+        .search-result-title {
+            color: var(--accent-color);
+            font-weight: 600;
+            margin-bottom: 0.3rem;
+        }
+
+        .search-result-section {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .search-result-badge {
+            background: linear-gradient(135deg, #a8d8ff, #ffb3d9);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-left: 1rem;
+        }
+
+        body.dark-mode .search-result-badge {
+            background: linear-gradient(135deg, #a78bfa, #7c3aed);
+        }
+
+        .highlight {
+            background-color: #ffeb3b;
+            color: #333;
+            padding: 0.1rem 0.3rem;
+            border-radius: 3px;
+            font-weight: 600;
+        }
+
+        .search-no-results {
+            padding: 2rem;
+            text-align: center;
+            color: var(--text-secondary);
+        }
+
+        .search-no-results-emoji {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links button {
+            background: none;
+            border: none;
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            position: relative;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .nav-links button:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .nav-links button.active {
+            background: rgba(255, 255, 255, 0.3);
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+        }
+
+        /* ===== Dark Mode Toggle Button ===== */
+        .dark-mode-toggle {
+            position: relative;
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid white;
+            color: white;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            z-index: 101;
+        }
+
+        .dark-mode-toggle:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.1);
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.4);
+        }
+
+        .dark-mode-toggle:active {
+            transform: scale(0.95);
+        }
+
+        /* ===== Page Container ===== */
+        .page {
+            display: none;
+            animation: fadeIn 0.6s ease;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ===== Hero Section ===== */
+        .hero {
+            background: linear-gradient(135deg, #a8d8ff 0%, #c9a8ff 50%, #ffb3d9 100%);
+            color: white;
+            padding: 4rem 2rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            transition: background var(--transition-speed) ease;
+        }
+
+        body.dark-mode .hero {
+            background: linear-gradient(135deg, #2d1f3a 0%, #1a2a3a 50%, #3d1f2a 100%);
+        }
+
+        .hero::before {
+            content: '🌸 🌺 🌼';
+            position: absolute;
+            top: 10px;
+            left: 20px;
+            font-size: 2rem;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .hero::after {
+            content: '🌷 🌹 🌻';
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            font-size: 2rem;
+            animation: float 3s ease-in-out infinite 0.5s;
+        }
+
+        .hero-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            animation: fadeInDown 0.8s ease;
+        }
+
+        .hero h1::before {
+            content: '🎉 ';
+            animation: bounce 1s infinite;
+        }
+
+        .hero h1::after {
+            content: ' 🎉';
+            animation: bounce 1s infinite 0.2s;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            opacity: 0.95;
+            animation: fadeInUp 0.8s ease 0.2s both;
+        }
+
+        .hero p::before {
+            content: '🚀 ';
+        }
+
+        .hero p::after {
+            content: ' ✨';
+        }
+
+        .hero-image {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            border: 5px solid white;
+            object-fit: cover;
+            box-shadow: 
+                0 0 0 4px #a8d8ff,
+                0 0 0 8px #ffb3d9,
+                0 15px 40px rgba(168, 216, 255, 0.4),
+                inset 0 0 20px rgba(255, 255, 255, 0.3);
+            animation: fadeInUp 0.8s ease 0.4s both, pulse 2s ease-in-out infinite 1.2s, glow 3s ease-in-out infinite;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        body.dark-mode .hero-image {
+            box-shadow: 
+                0 0 0 4px #a78bfa,
+                0 0 0 8px #7c3aed,
+                0 15px 40px rgba(167, 139, 250, 0.3),
+                inset 0 0 20px rgba(167, 139, 250, 0.2);
+        }
+
+        .hero-image:hover {
+            transform: scale(1.05);
+            box-shadow: 
+                0 0 0 4px #a8d8ff,
+                0 0 0 8px #ffb3d9,
+                0 20px 50px rgba(168, 216, 255, 0.5),
+                inset 0 0 20px rgba(255, 255, 255, 0.4);
+        }
+
+        body.dark-mode .hero-image:hover {
+            box-shadow: 
+                0 0 0 4px #a78bfa,
+                0 0 0 8px #7c3aed,
+                0 20px 50px rgba(167, 139, 250, 0.4),
+                inset 0 0 20px rgba(167, 139, 250, 0.3);
+        }
+
+        /* ===== Sections ===== */
+        .section {
+            padding: 4rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            transition: background var(--transition-speed) ease;
+        }
+
+        .section::before {
+            content: '🌸';
+            position: absolute;
+            left: 20px;
+            top: 50px;
+            font-size: 2rem;
+            opacity: 0.3;
+            animation: sway 4s ease-in-out infinite;
+        }
+
+        .section::after {
+            content: '🌺';
+            position: absolute;
+            right: 20px;
+            bottom: 50px;
+            font-size: 2rem;
+            opacity: 0.3;
+            animation: sway 4s ease-in-out infinite 0.5s;
+        }
+
+        .section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            text-align: center;
+            color: var(--accent-color);
+            position: relative;
+            padding-bottom: 1rem;
+            animation: slideIn 0.6s ease;
+            transition: color var(--transition-speed) ease;
+        }
+
+        .section h2::before {
+            content: '✨ ';
+            animation: twinkle 2s infinite;
+        }
+
+        .section h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(90deg, #a8d8ff, #ffb3d9);
+            border-radius: 2px;
+            animation: expandWidth 0.8s ease;
+            transition: background var(--transition-speed) ease;
+        }
+
+        body.dark-mode .section h2::after {
+            background: linear-gradient(90deg, #a78bfa, #7c3aed);
+        }
+
+        /* ===== Carousel Styles ===== */
+        .carousel-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 2rem;
+            margin: 2rem 0;
+            position: relative;
+        }
+
+        .carousel-wrapper {
+            flex: 1;
+            overflow: hidden;
+            border-radius: 15px;
+            max-width: 500px;
+        }
+
+        .carousel {
+            display: flex;
+            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            gap: 2rem;
+        }
+
+        .carousel-item {
+            min-width: 100%;
+            display: flex;
+            justify-content: center;
+            animation: fadeInUp 0.6s ease;
+        }
+
+        .carousel-btn {
+            background: linear-gradient(135deg, #a8d8ff 0%, #ffb3d9 100%);
+            color: white;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(168, 216, 255, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        body.dark-mode .carousel-btn {
+            background: linear-gradient(135deg, #a78bfa 0%, #7c3aed 100%);
+            box-shadow: 0 4px 15px rgba(167, 139, 250, 0.3);
+        }
+
+        .carousel-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.2);
+            transition: left 0.3s ease;
+        }
+
+        .carousel-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 25px rgba(168, 216, 255, 0.4);
+        }
+
+        body.dark-mode .carousel-btn:hover {
+            box-shadow: 0 8px 25px rgba(167, 139, 250, 0.4);
+        }
+
+        .carousel-btn:hover::before {
+            left: 100%;
+        }
+
+        .carousel-btn:active {
+            transform: scale(0.95);
+        }
+
+        /* ===== Carousel Dots ===== */
+        .carousel-dots {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(168, 216, 255, 0.5);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        body.dark-mode .dot {
+            background: rgba(167, 139, 250, 0.5);
+        }
+
+        .dot:hover {
+            background: #a8d8ff;
+            transform: scale(1.2);
+        }
+
+        body.dark-mode .dot:hover {
+            background: #a78bfa;
+        }
+
+        .dot.active {
+            background: linear-gradient(135deg, #a8d8ff, #ffb3d9);
+            width: 16px;
+            height: 16px;
+            box-shadow: 0 0 10px rgba(168, 216, 255, 0.5);
+        }
+
+        body.dark-mode .dot.active {
+            background: linear-gradient(135deg, #a78bfa, #7c3aed);
+            box-shadow: 0 0 10px rgba(167, 139, 250, 0.5);
+        }
+
+        /* ===== Cards ===== */
+        .card {
+            background: var(--bg-secondary);
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 8px 25px var(--card-shadow);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            min-height: 300px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: var(--text-primary);
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(255, 179, 217, 0.1) 0%, transparent 70%);
+            animation: rotate 20s linear infinite;
+        }
+
+        body.dark-mode .card::before {
+            background: radial-gradient(circle, rgba(167, 139, 250, 0.1) 0%, transparent 70%);
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px var(--card-shadow);
+        }
+
+        .card:hover::after {
+            animation: sparkleCard 0.6s ease-out;
+        }
+
+        .card::after {
+            content: '✨';
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            opacity: 0;
+            font-size: 1.5rem;
+        }
+
+        /* ===== Project Icon ===== */
+        .project-icon {
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+            animation: bounce 2s ease-in-out infinite;
+            position: relative;
+            z-index: 2;
+        }
+
+        .project-icon.spin {
+            animation: spin 3s linear infinite;
+        }
+
+        .project-icon.pulse {
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        .project-icon.glow {
+            animation: glow 3s ease-in-out infinite;
+        }
+
+        /* ===== Interest Cards ===== */
+        .interest-card {
+            background: linear-gradient(135deg, #c9f0ff 0%, #ffd9e8 100%);
+            border: none;
+        }
+
+        body.dark-mode .interest-card {
+            background: linear-gradient(135deg, #2d3a4a 0%, #3d2a3a 100%);
+        }
+
+        .interest-card h3 {
+            color: var(--accent-color);
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+            animation: slideInLeft 0.6s ease;
+            position: relative;
+            z-index: 2;
+        }
+
+        .interest-card p {
+            color: var(--text-secondary);
+            font-size: 1rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* ===== Goal Cards ===== */
+        .goal-card {
+            background: linear-gradient(135deg, #e6d9ff 0%, #ffc9e3 100%);
+            border: none;
+        }
+
+        body.dark-mode .goal-card {
+            background: linear-gradient(135deg, #3d2a4a 0%, #3d2a3a 100%);
+        }
+
+        .goal-card h3 {
+            color: var(--accent-color);
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+            animation: slideInRight 0.6s ease;
+            position: relative;
+            z-index: 2;
+        }
+
+        .goal-card p {
+            color: var(--text-secondary);
+            font-size: 1rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* ===== Project Cards ===== */
+        .project-card {
+            background: linear-gradient(135deg, #b3e5ff 0%, #ffb3d9 100%);
+            border: none;
+        }
+
+        body.dark-mode .project-card {
+            background: linear-gradient(135deg, #2d3a4a 0%, #3d2a3a 100%);
+        }
+
+        .project-card h3 {
+            color: var(--accent-color);
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+            animation: slideInUp 0.6s ease;
+            position: relative;
+            z-index: 2;
+        }
+
+        .project-card p {
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+            font-size: 1rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .tag {
+            display: inline-block;
+            background: linear-gradient(135deg, #a8d8ff, #ffb3d9);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            animation: pulse 2s ease-in-out infinite;
+            position: relative;
+            z-index: 2;
+            transition: background var(--transition-speed) ease;
+        }
+
+        body.dark-mode .tag {
+            background: linear-gradient(135deg, #a78bfa, #7c3aed);
+        }
+
+        .tag::before {
+            content: '💫 ';
+        }
+
+        /* ===== Contact Section ===== */
+        .contact-section {
+            background: var(--bg-primary);
+            position: relative;
+            transition: background var(--transition-speed) ease;
+        }
+
+        .contact-section::before {
+            content: '💌 💌 💌';
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 2rem;
+            opacity: 0.2;
+            animation: float 4s ease-in-out infinite;
+        }
+
+        .contact-content {
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .contact-content p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            color: var(--text-primary);
+        }
+
+        .contact-content p::before {
+            content: '👋 ';
+            animation: wave 1s ease-in-out infinite;
+        }
+
+        .contact-links {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .contact-btn {
+            background: linear-gradient(135deg, #a8d8ff 0%, #ffb3d9 100%);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(168, 216, 255, 0.3);
+            position: relative;
+            overflow: hidden;
+            border: none;
+            cursor: pointer;
+        }
+
+        body.dark-mode .contact-btn {
+            background: linear-gradient(135deg, #a78bfa 0%, #7c3aed 100%);
+            box-shadow: 0 4px 15px rgba(167, 139, 250, 0.3);
+        }
+
+        .contact-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.2);
+            transition: left 0.3s ease;
+        }
+
+        .contact-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(168, 216, 255, 0.4);
+        }
+
+        body.dark-mode .contact-btn:hover {
+            box-shadow: 0 8px 25px rgba(167, 139, 250, 0.4);
+        }
+
+        .contact-btn:hover::before {
+            left: 100%;
+        }
+
+        /* ===== Footer ===== */
+        .footer {
+            background: var(--header-bg);
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+            position: relative;
+            transition: background var(--transition-speed) ease;
+        }
+
+        .footer::before {
+            content: '🌸 🌺 🌼 🌻 🌷';
+            display: block;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        /* ===== Animations ===== */
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: scaleX(0);
+            }
+            to {
+                opacity: 1;
+                transform: scaleX(1);
+            }
+        }
+
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-15px);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+        }
+
+        @keyframes twinkle {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.3;
+            }
+        }
+
+        @keyframes spin {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes sparkleCard {
+            0% {
+                opacity: 1;
+                transform: scale(1);
+            }
+            100% {
+                opacity: 0;
+                transform: scale(0);
+            }
+        }
+
+        @keyframes sway {
+            0%, 100% {
+                transform: translateX(0);
+            }
+            50% {
+                transform: translateX(10px);
+            }
+        }
+
+        @keyframes wave {
+            0%, 100% {
+                transform: rotate(0deg);
+            }
+            25% {
+                transform: rotate(20deg);
+            }
+            75% {
+                transform: rotate(-20deg);
+            }
+        }
+
+        @keyframes rotate {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes expandWidth {
+            from {
+                width: 0;
+            }
+            to {
+                width: 100px;
+            }
+        }
+
+        @keyframes floatFlowers {
+            0% {
+                transform: translateY(0);
+            }
+            100% {
+                transform: translateY(-100vh);
+            }
+        }
+
+        @keyframes glow {
+            0%, 100% {
+                filter: drop-shadow(0 0 10px rgba(168, 216, 255, 0.5));
+            }
+            50% {
+                filter: drop-shadow(0 0 20px rgba(255, 179, 217, 0.6));
+            }
+        }
+
+        /* ===== Responsive Design ===== */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .nav-links {
+                gap: 1rem;
+                font-size: 0.9rem;
+            }
+
+            .section h2 {
+                font-size: 2rem;
+            }
+
+            .navbar {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .header::before,
+            .header::after {
+                display: none;
+            }
+
+            .carousel-container {
+                gap: 1rem;
+            }
+
+            .carousel-btn {
+                width: 40px;
+                height: 40px;
+                font-size: 1.2rem;
+            }
+
+            .carousel-wrapper {
+                max-width: 100%;
+            }
+
+            .project-icon {
+                font-size: 3rem;
+            }
+
+            .dark-mode-toggle {
+                width: 40px;
+                height: 40px;
+                font-size: 1.1rem;
+            }
+
+            .search-container {
+                max-width: 100%;
+                order: 3;
+                flex-basis: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Header -->
+    <header class="header">
+        <nav class="navbar">
+            <div class="logo" onclick="showPage('home')">Mutagoma Precious</div>
+            
+            <!-- Search Bar -->
+            <div class="search-container">
+                <input 
+                    type="text" 
+                    class="search-input" 
+                    id="searchInput" 
+                    placeholder="🔍 Search portfolio..."
+                    onkeyup="performSearch()"
+                >
+                <span class="search-icon">🔍</span>
+                <button class="search-clear" onclick="clearSearch()">✕</button>
+                <div class="search-results-modal" id="searchResults"></div>
+            </div>
+
+            <button class="dark-mode-toggle" id="darkModeBtn" onclick="toggleDarkMode()" title="Toggle Dark Mode">🌙</button>
+            
+            <ul class="nav-links">
+                <li><button onclick="showPage('home')" class="nav-btn active" data-page="home">🏠 Home</button></li>
+                <li><button onclick="showPage('about')" class="nav-btn" data-page="about">👤 About</button></li>
+                <li><button onclick="showPage('interests')" class="nav-btn" data-page="interests">🎭 Interests</button></li>
+                <li><button onclick="showPage('goals')" class="nav-btn" data-page="goals">🎯 Goals</button></li>
+                <li><button onclick="showPage('projects')" class="nav-btn" data-page="projects">🚀 Projects</button></li>
+                <li><button onclick="showPage('contact')" class="nav-btn" data-page="contact">📧 Contact</button></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- HOME PAGE -->
+    <div id="home" class="page active">
+        <section class="hero">
+            <div class="hero-content">
+                <h1>Welcome to My Portfolio</h1>
+                <p>Exploring STEM, Building Solutions, Growing Every Day</p>
+                <img src="https://fcsqbqyomghwjhlnmvgn.supabase.co/storage/v1/object/public/attachments/c94c8300-3ec6-4af8-9f6b-5ecd5afe8546.png" alt="Mutagoma Precious" class="hero-image">
+            </div>
+        </section>
+    </div>
+
+    <!-- ABOUT PAGE -->
+    <div id="about" class="page">
+        <section class="section">
+            <h2>About Me</h2>
+            <div class="card">
+                <p>I'm a passionate STEM student currently studying in the Plus STEM program at Ntare Louisenlund School. I enjoy exploring how science, technology, and problem-solving can be used to create real-world solutions. I'm curious and always excited to learn something new, whether it's building projects, experimenting with ideas, or developing my skills in areas like coding, mathematics, and engineering like am doing now in my portfolio website. My goal is to keep growing, challenge myself, and contribute to meaningful innovations as I continue discovering what I'm capable of.</p>
+            </div>
+        </section>
+    </div>
+
+    <!-- INTERESTS PAGE -->
+    <div id="interests" class="page">
+        <section class="section">
+            <h2>Hobbies & Interests</h2>
+            <div class="carousel-container">
+                <button class="carousel-btn prev-btn" onclick="moveCarousel('interests', -1)">❮</button>
+                <div class="carousel-wrapper">
+                    <div class="carousel" id="interests-carousel">
+                        <div class="carousel-item">
+                            <div class="card interest-card">
+                                <h3>🎭 Dance</h3>
+                                <p>Expressing myself through movement and creativity</p>
+                            </div>
+                        </div>
+                        <div class="carousel-item">
+                            <div class="card interest-card">
+                                <h3>🎵 Music</h3>
+                                <p>Listening to and enjoying different genres and artists</p>
+                            </div>
+                        </div>
+                        <div class="carousel-item">
+                            <div class="card interest-card">
+                                <h3>📚 Reading Novels</h3>
+                                <p>Exploring different worlds and stories through books</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button class="carousel-btn next-btn" onclick="moveCarousel('interests', 1)">❯</button>
+            </div>
+            <div class="carousel-dots" id="interests-dots">
+                <span class="dot active" onclick="goToSlide('interests', 0)"></span>
+                <span class="dot" onclick="goToSlide('interests', 1)"></span>
+                <span class="dot" onclick="goToSlide('interests', 2)"></span>
+            </div>
+        </section>
+    </div>
+
+    <!-- GOALS PAGE -->
+    <div id="goals" class="page">
+        <section class="section">
+            <h2>My Goals</h2>
+            <div class="carousel-container">
+                <button class="carousel-btn prev-btn" onclick="moveCarousel('goals', -1)">❮</button>
+                <div class="carousel-wrapper">
+                    <div class="carousel" id="goals-carousel">
+                        <div class="carousel-item">
+                            <div class="card goal-card">
+                                <h3>📖 Academic Excellence</h3>
+                                <p>Achieve a great academic background with excellent grades</p>
+                            </div>
+                        </div>
+                        <div class="carousel-item">
+                            <div class="card goal-card">
+                                <h3>🎓 University Success</h3>
+                                <p>Get accepted to good universities for my future</p>
+                            </div>
+                        </div>
+                        <div class="carousel-item">
+                            <div class="card goal-card">
+                                <h3>🚀 Continuous Growth</h3>
+                                <p>Keep learning and challenging myself every day</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button class="carousel-btn next-btn" onclick="moveCarousel('goals', 1)">❯</button>
+            </div>
+            <div class="carousel-dots" id="goals-dots">
+                <span class="dot active" onclick="goToSlide('goals', 0)"></span>
+                <span class="dot" onclick="goToSlide('goals', 1)"></span>
+                <span class="dot" onclick="goToSlide('goals', 2)"></span>
+            </div>
+        </section>
+    </div>
+
+    <!-- PROJECTS PAGE -->
+    <div id="projects" class="page">
+        <section class="section">
+            <h2>Projects</h2>
+            <div class="carousel-container">
+                <button class="carousel-btn prev-btn" onclick="moveCarousel('projects', -1)">❮</button>
+                <div class="carousel-wrapper">
+                    <div class="carousel" id="projects-carousel">
+                        <!-- Project 1: Poem of the Month -->
+                        <div class="carousel-item">
+                            <div class="card project-card">
+                                <div class="project-icon bounce">📝</div>
+                                <h3>Poem of the Month</h3>
+                                <p><strong>Theme:</strong> Identity & Self</p>
+                                <p>I wrote a poem exploring the theme of identity and self-expression. Though I was hesitant at first, I took the risk and submitted my work. Winning 2nd place was an amazing achievement that taught me the value of stepping out of my comfort zone and being brave enough to share my authentic voice.</p>
+                                <p><strong>Learning:</strong> Became a risk-taker and discovered the power of vulnerability in creative expression.</p>
+                                <span class="tag">Creative Writing</span>
+                            </div>
+                        </div>
+
+                        <!-- Project 2: National Exams & Scholarship -->
+                        <div class="carousel-item">
+                            <div class="card project-card">
+                                <div class="project-icon spin">🎓⭐</div>
+                                <h3>National Exams & Scholarship</h3>
+                                <p><strong>Achievement:</strong> Earned Scholarship to Ntare Louisenlund International School</p>
+                                <p>I successfully passed my national exams and earned a scholarship to Ntare Louisenlund International School. This achievement represents years of hard work, dedication, and commitment to academic excellence. It's a foundation that will support my future goals and aspirations.</p>
+                                <p><strong>Impact:</strong> Secured a world-class education at a prestigious international school, opening doors to global opportunities.</p>
+                                <span class="tag">Academic Achievement</span>
+                            </div>
+                        </div>
+
+                        <!-- Project 3: Personal Portfolio Website -->
+                        <div class="carousel-item">
+                            <div class="card project-card">
+                                <div class="project-icon pulse">💻🌐</div>
+                                <h3>Personal Portfolio Website</h3>
+                                <p><strong>Technologies:</strong> HTML, CSS, JavaScript</p>
+                                <p>I built this interactive portfolio website from scratch to showcase my skills, interests, and achievements. The site features smooth page transitions, animated carousels, responsive design, and creative animations. This project demonstrates my ability to code, design, and create engaging user experiences.</p>
+                                <p><strong>Features:</strong> Interactive navigation, animated emojis, smooth scrolling, responsive layout, and sparkle effects.</p>
+                                <span class="tag">Web Development</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button class="carousel-btn next-btn" onclick="moveCarousel('projects', 1)">❯</button>
+            </div>
+            <div class="carousel-dots" id="projects-dots">
+                <span class="dot active" onclick="goToSlide('projects', 0)"></span>
+                <span class="dot" onclick="goToSlide('projects', 1)"></span>
+                <span class="dot" onclick="goToSlide('projects', 2)"></span>
+            </div>
+        </section>
+    </div>
+
+    <!-- CONTACT PAGE -->
+    <div id="contact" class="page">
+        <section class="section contact-section">
+            <h2>Get In Touch</h2>
+            <div class="contact-content">
+                <p>Feel free to reach out to me!</p>
+                <div class="contact-links">
+                    <a href="mailto:mutagoma.precious31@ntare-louisenlund.org" class="contact-btn">📧 Email Me</a>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2026 Mutagoma Precious. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // ===== Carousel State Management =====
+        const carouselState = {
+            interests: 0,
+            goals: 0,
+            projects: 0
+        };
+
+        // ===== Portfolio Content Database =====
+        const portfolioContent = {
+            home: {
+                title: 'Home',
+                content: 'Welcome to My Portfolio, Exploring STEM, Building Solutions, Growing Every Day'
+            },
+            about: {
+                title: 'About Me',
+                content: 'I\'m a passionate STEM student currently studying in the Plus STEM program at Ntare Louisenlund School. I enjoy exploring how science, technology, and problem-solving can be used to create real-world solutions.'
+            },
+            interests: [
+                { title: 'Dance', content: 'Expressing myself through movement and creativity' },
+                { title: 'Music', content: 'Listening to and enjoying different genres and artists' },
+                { title: 'Reading Novels', content: 'Exploring different worlds and stories through books' }
+            ],
+            goals: [
+                { title: 'Academic Excellence', content: 'Achieve a great academic background with excellent grades' },
+                { title: 'University Success', content: 'Get accepted to good universities for my future' },
+                { title: 'Continuous Growth', content: 'Keep learning and challenging myself every day' }
+            ],
+            projects: [
+                { title: 'Poem of the Month', content: 'I wrote a poem exploring the theme of identity and self-expression. Winning 2nd place was an amazing achievement.' },
+                { title: 'National Exams & Scholarship', content: 'I successfully passed my national exams and earned a scholarship to Ntare Louisenlund International School.' },
+                { title: 'Personal Portfolio Website', content: 'I built this interactive portfolio website from scratch to showcase my skills, interests, and achievements.' }
+            ],
+            contact: {
+                title: 'Contact',
+                content: 'Feel free to reach out to me via email'
+            }
+        };
+
+        // ===== Search Function =====
+        function performSearch() {
+            const searchInput = document.getElementById('searchInput');
+            const searchQuery = searchInput.value.toLowerCase().trim();
+            const resultsModal = document.getElementById('searchResults');
+
+            if (searchQuery.length === 0) {
+                resultsModal.classList.remove('active');
+                return;
+            }
+
+            const results = [];
+
+            // Search in all sections
+            for (const [section, data] of Object.entries(portfolioContent)) {
+                if (Array.isArray(data)) {
+                    // For arrays (interests, goals, projects)
+                    data.forEach((item, index) => {
+                        if (item.title.toLowerCase().includes(searchQuery) || 
+                            item.content.toLowerCase().includes(searchQuery)) {
+                            results.push({
+                                title: item.title,
+                                content: item.content,
+                                section: section.charAt(0).toUpperCase() + section.slice(1),
+                                page: section,
+                                index: index
+                            });
+                        }
+                    });
+                } else {
+                    // For objects (home, about, contact)
+                    if (data.title.toLowerCase().includes(searchQuery) || 
+                        data.content.toLowerCase().includes(searchQuery)) {
+                        results.push({
+                            title: data.title,
+                            content: data.content,
+                            section: section.charAt(0).toUpperCase() + section.slice(1),
+                            page: section
+                        });
+                    }
+                }
+            }
+
+            // Display results
+            if (results.length === 0) {
+                resultsModal.innerHTML = `
+                    <div class="search-no-results">
+                        <div class="search-no-results-emoji">🔍</div>
+                        <p>No results found for "<strong>${searchQuery}</strong>"</p>
+                        <p style="font-size: 0.9rem; margin-top: 0.5rem;">Try searching for: Dance, Music, Goals, Projects, STEM, etc.</p>
+                    </div>
+                `;
+            } else {
+                let html = `<div class="search-results-header">🔍 Found ${results.length} result${results.length !== 1 ? 's' : ''}</div>`;
+                
+                results.forEach(result => {
+                    const highlightedTitle = highlightText(result.title, searchQuery);
+                    const highlightedContent = highlightText(result.content, searchQuery);
+                    
+                    html += `
+                        <div class="search-result-item" onclick="goToSearchResult('${result.page}', ${result.index !== undefined ? result.index : 'null'})">
+                            <div class="search-result-text">
+                                <div class="search-result-title">${highlightedTitle}</div>
+                                <div class="search-result-section">${result.section}</div>
+                            </div>
+                            <div class="search-result-badge">→</div>
+                        </div>
+                    `;
+                });
+                
+                resultsModal.innerHTML = html;
+            }
+
+            resultsModal.classList.add('active');
+        }
+
+        // ===== Highlight Text Function =====
+        function highlightText(text, query) {
+            const regex = new RegExp(`(${query})`, 'gi');
+            return text.replace(regex, '<span class="highlight">$1</span>');
+        }
+
+        // ===== Go to Search Result =====
+        function goToSearchResult(page, index) {
+            showPage(page);
+            document.getElementById('searchInput').value = '';
+            document.getElementById('searchResults').classList.remove('active');
+            
+            // If it's a carousel page, navigate to the specific item
+            if (index !== null && (page === 'interests' || page === 'goals' || page === 'projects')) {
+                goToSlide(page, index);
+            }
+        }
+
+        // ===== Clear Search =====
+        function clearSearch() {
+            document.getElementById('searchInput').value = '';
+            document.getElementById('searchResults').classList.remove('active');
+        }
+
+        // ===== Close Search Results When Clicking Outside =====
+        document.addEventListener('click', function(e) {
+            const searchContainer = document.querySelector('.search-container');
+            if (!searchContainer.contains(e.target)) {
+                document.getElementById('searchResults').classList.remove('active');
+            }
+        });
+
+        // ===== Dark Mode Toggle =====
+        function toggleDarkMode() {
+            const body = document.body;
+            const btn = document.getElementById('darkModeBtn');
+
+            body.classList.toggle('dark-mode');
+
+            if (body.classList.contains('dark-mode')) {
+                btn.textContent = '☀️';
+                btn.title = 'Toggle Light Mode';
+                localStorage.setItem('darkMode', 'enabled');
+            } else {
+                btn.textContent = '🌙';
+                btn.title = 'Toggle Dark Mode';
+                localStorage.setItem('darkMode', 'disabled');
+            }
+        }
+
+        // ===== Load Dark Mode Preference =====
+        window.addEventListener('load', function() {
+            const darkModePreference = localStorage.getItem('darkMode');
+            if (darkModePreference === 'enabled') {
+                document.body.classList.add('dark-mode');
+                document.getElementById('darkModeBtn').textContent = '☀️';
+                document.getElementById('darkModeBtn').title = 'Toggle Light Mode';
+            }
+        });
+
+        // ===== Show Page Function =====
+        function showPage(pageId) {
+            const pages = document.querySelectorAll('.page');
+            pages.forEach(page => {
+                page.classList.remove('active');
+            });
+
+            document.getElementById(pageId).classList.add('active');
+
+            const navBtns = document.querySelectorAll('.nav-btn');
+            navBtns.forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.querySelector(`[data-page="${pageId}"]`).classList.add('active');
+
+            window.scrollTo(0, 0);
+        }
+
+        // ===== Move Carousel Function =====
+        function moveCarousel(section, direction) {
+            const carousel = document.getElementById(`${section}-carousel`);
+            const items = carousel.querySelectorAll('.carousel-item');
+            const totalItems = items.length;
+
+            carouselState[section] += direction;
+
+            if (carouselState[section] >= totalItems) {
+                carouselState[section] = 0;
+            } else if (carouselState[section] < 0) {
+                carouselState[section] = totalItems - 1;
+            }
+
+            const offset = -carouselState[section] * 100;
+            carousel.style.transform = `translateX(${offset}%)`;
+
+            updateDots(section);
+        }
+
+        // ===== Go to Specific Slide =====
+        function goToSlide(section, index) {
+            const carousel = document.getElementById(`${section}-carousel`);
+            const items = carousel.querySelectorAll('.carousel-item');
+            const totalItems = items.length;
+
+            if (index >= 0 && index < totalItems) {
+                carouselState[section] = index;
+                const offset = -index * 100;
+                carousel.style.transform = `translateX(${offset}%)`;
+                updateDots(section);
+            }
+        }
+
+        // ===== Update Dots =====
+        function updateDots(section) {
+            const dots = document.querySelectorAll(`#${section}-dots .dot`);
+            dots.forEach((dot, index) => {
+                if (index === carouselState[section]) {
+                    dot.classList.add('active');
+                } else {
+                    dot.classList.remove('active');
+                }
+            });
+        }
+
+        // ===== Add Sparkle Effect on Click =====
+        document.addEventListener('click', function(e) {
+            if (e.target.closest('.card') || e.target.closest('.contact-btn')) {
+                createSparkle(e.pageX, e.pageY);
+            }
+        });
+
+        function createSparkle(x, y) {
+            const sparkle = document.createElement('div');
+            sparkle.style.position = 'fixed';
+            sparkle.style.left = x + 'px';
+            sparkle.style.top = y + 'px';
+            sparkle.style.fontSize = '1.5rem';
+            sparkle.style.pointerEvents = 'none';
+            sparkle.style.zIndex = '9999';
+            sparkle.textContent = '✨';
+
+            document.body.appendChild(sparkle);
+
+            let opacity = 1;
+            let scale = 1;
+            let yPos = y;
+
+            const interval = setInterval(() => {
+                opacity -= 0.05;
+                scale -= 0.05;
+                yPos -= 2;
+
+                sparkle.style.opacity = opacity;
+                sparkle.style.transform = `scale(${scale}) translateY(${yPos - y}px)`;
+
+                if (opacity <= 0) {
+                    clearInterval(interval);
+                    sparkle.remove();
+                }
+            }, 30);
+        }
+
+        // ===== Add Emoji Reaction on Card Hover =====
+        document.addEventListener('mouseover', function(e) {
+            const card = e.target.closest('.card');
+            if (card) {
+                const emoji = document.createElement('span');
+                emoji.style.position = 'absolute';
+                emoji.style.top = '10px';
+                emoji.style.right = '10px';
+                emoji.style.fontSize = '2rem';
+                emoji.style.animation = 'bounce 0.6s ease';
+
+                if (card.classList.contains('interest-card')) {
+                    emoji.textContent = '🎭';
+                } else if (card.classList.contains('goal-card')) {
+                    emoji.textContent = '🎯';
+                } else if (card.classList.contains('project-card')) {
+                    emoji.textContent = '🚀';
+                } else {
+                    emoji.textContent = '💡';
+                }
+
+                card.style.position = 'relative';
+                card.appendChild(emoji);
+
+                setTimeout(() => {
+                    emoji.remove();
+                }, 600);
+            }
+        });
+
+        console.log('✨ Welcome to Mutagoma Precious Portfolio! ✨');
+        console.log('🔍 Search feature is now active! Try searching for keywords!');
+    </script>
+</body>
+</html>
